@@ -8,6 +8,10 @@ public class Board : MonoBehaviour
     public int height;
 
     public GameObject bgTilePrefab;
+
+    public Gem[] gems;
+
+
     
     // Start is called before the first frame update
     void Start()
@@ -26,8 +30,19 @@ public class Board : MonoBehaviour
                 GameObject bgTile = Instantiate(bgTilePrefab,pos,Quaternion.identity);
                 bgTile.transform.parent=transform;
                 bgTile.name="BG Tile - " + x + " , " +y ;
+
+                int gemToUse =Random.Range(0,gems.Length);
+                SpawnGem(new Vector2Int(x,y) , gems[gemToUse]);
             }
 
         }
+   }
+
+   private void SpawnGem(Vector2Int pos, Gem gemToSpawn)
+   {
+        Gem gem= Instantiate(gemToSpawn, new Vector3(pos.x, pos.y ,0f) , Quaternion.identity);
+        gem.transform.parent=this.transform;
+        gem.name= "Gem - " +pos.x + " , " + pos.y;
+        
    }
 }
