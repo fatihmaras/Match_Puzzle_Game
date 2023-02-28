@@ -10,12 +10,14 @@ public class Board : MonoBehaviour
     public GameObject bgTilePrefab;
 
     public Gem[] gems;
+    public Gem[,] allGems;
 
 
     
     // Start is called before the first frame update
     void Start()
     {
+        allGems=new Gem[width,height];
         Setup();
     }
 
@@ -41,8 +43,12 @@ public class Board : MonoBehaviour
    private void SpawnGem(Vector2Int pos, Gem gemToSpawn)
    {
         Gem gem= Instantiate(gemToSpawn, new Vector3(pos.x, pos.y ,0f) , Quaternion.identity);
-        gem.transform.parent=this.transform;
+        gem.transform.parent=transform;
         gem.name= "Gem - " +pos.x + " , " + pos.y;
+        allGems[pos.x, pos.y] =gem;
+
+        gem.SetupGem(pos,this);
+
         
    }
 }
