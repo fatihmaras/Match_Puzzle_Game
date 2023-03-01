@@ -55,7 +55,7 @@ public class Board : MonoBehaviour
                 {
                     gemToUse =Random.Range(0,gems.Length);
                     iterations++;
-                    
+
                     /*if(iterations>0)  // just a debug control
                     {
                         Debug.Log(iterations);
@@ -98,5 +98,30 @@ public class Board : MonoBehaviour
         }
 
         return false;
+   }
+
+   private void DestroyMatchedGemAt(Vector2Int pos)
+   {
+        if(allGems[pos.x, pos.y] != null)
+        {
+            if(allGems[pos.x, pos.y].isMatched)
+            {
+                Destroy(allGems[pos.x,pos.y].gameObject);
+                allGems[pos.x, pos.y]=null;
+
+            }
+        }
+        
+   }
+
+   public void DestroyMatches()
+   {
+        for(int i=0; i<matchFinder.currentMatches.Count; i++)
+        {
+            if(matchFinder.currentMatches[i]!=null)
+            {
+                DestroyMatchedGemAt(matchFinder.currentMatches[i].posIndex);
+            }
+        }
    }
 }
