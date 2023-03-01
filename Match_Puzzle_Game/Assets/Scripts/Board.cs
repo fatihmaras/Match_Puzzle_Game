@@ -14,13 +14,24 @@ public class Board : MonoBehaviour
 
     public float gemSpeed;
 
+    private MatchFinder matchFinder;
 
+
+    private void Awake() 
+    {
+        matchFinder=FindObjectOfType<MatchFinder>();
+    }
     
     // Start is called before the first frame update
     void Start()
     {
         allGems=new Gem[width,height];
         Setup();
+    }
+
+    void Update() 
+    {
+        matchFinder.FindAllMatches();
     }
 
    

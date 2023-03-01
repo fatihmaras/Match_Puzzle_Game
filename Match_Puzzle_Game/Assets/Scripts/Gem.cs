@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Gem : MonoBehaviour
 {
-    //[HideInInspector]
+    [HideInInspector]
     public Vector2Int posIndex;
-    // [HideInInspector]
+    [HideInInspector]
     public Board board;
 
      private Vector2 firstTouchPosition;
@@ -16,6 +16,11 @@ public class Gem : MonoBehaviour
     private float swipeAngle=0;
 
     private Gem otherGem;
+
+    public enum GemType{ blue, green, red, yellow, purple}
+    public GemType type;
+
+    public bool isMatched;
 
 
 
