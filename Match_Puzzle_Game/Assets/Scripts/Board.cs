@@ -17,6 +17,9 @@ public class Board : MonoBehaviour
     [HideInInspector]
     public  MatchFinder matchFinder;
 
+    public enum BoardState{ wait , move}
+    public BoardState currentState=BoardState.move;
+
 
     private void Awake() 
     {
@@ -32,7 +35,7 @@ public class Board : MonoBehaviour
 
     void Update() 
     {
-        matchFinder.FindAllMatches();
+       //  matchFinder.FindAllMatches();  --> We dont need to check at the every frame , we need to check when we move objects
     }
 
    
@@ -165,8 +168,14 @@ public class Board : MonoBehaviour
 
         if(matchFinder.currentMatches.Count>0)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.05f);
             DestroyMatches();
+        }
+        else
+        {
+            yield return new WaitForSeconds(.5f);
+            currentState=BoardState.move;
+
         }
 
    }

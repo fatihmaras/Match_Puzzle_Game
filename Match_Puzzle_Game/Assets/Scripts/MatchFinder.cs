@@ -16,7 +16,7 @@ public class MatchFinder : MonoBehaviour
 
     public void FindAllMatches()
     {
-         // currentMatches.Clear();  --> We dont need after using list.distinct
+        currentMatches.Clear();  
         
         for(int x=0 ; x<board.width; x++)
         {
