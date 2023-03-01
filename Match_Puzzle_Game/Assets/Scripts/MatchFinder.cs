@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class MatchFinder : MonoBehaviour
 {
     private Board board;
+    public List<Gem>currentMatches=new List<Gem>();
 
     private void Awake() 
     {
@@ -14,6 +16,8 @@ public class MatchFinder : MonoBehaviour
 
     public void FindAllMatches()
     {
+         // currentMatches.Clear();  --> We dont need after using list.distinct
+        
         for(int x=0 ; x<board.width; x++)
         {
             for(int y=0; y<board.height; y++)
@@ -30,10 +34,14 @@ public class MatchFinder : MonoBehaviour
                         {
                             if(leftGem.type==currentGem.type && rightGem.type==currentGem.type)   // Check gem type left-current-right
                             {
-                                
                                 currentGem.isMatched=true;
                                 leftGem.isMatched=true;
                                 rightGem.isMatched=true;
+                                
+                                currentMatches.Add(currentGem);
+                                currentMatches.Add(leftGem);
+                                currentMatches.Add(rightGem);
+                                
                             }
                         }
                     }
@@ -45,36 +53,24 @@ public class MatchFinder : MonoBehaviour
                         if(aboveGem != null && belowGem != null)  //neighbor slot is not empty
                         {
                             if(aboveGem.type==currentGem.type && belowGem.type==currentGem.type)   // Check gemtype above-current-below
-                            {
-                                
+                            {                             
                                 currentGem.isMatched=true;
                                 aboveGem.isMatched=true;
                                 belowGem.isMatched=true;
+
+                                currentMatches.Add(currentGem);
+                                currentMatches.Add(aboveGem);
+                                currentMatches.Add(belowGem);
                             }
                         }
                     }
                 }
             }
         }
+
+        if(currentMatches.Count > 0)
+        {
+            currentMatches=currentMatches.Distinct().ToList();    // to prevenet to duplicate(consider twice) matched gem ( vertical+horizontal match -- not 6 , it is 5)
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
