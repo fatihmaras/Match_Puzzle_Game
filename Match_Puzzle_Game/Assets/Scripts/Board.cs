@@ -71,7 +71,7 @@ public class Board : MonoBehaviour
 
    private void SpawnGem(Vector2Int pos, Gem gemToSpawn)
    {
-        Gem gem= Instantiate(gemToSpawn, new Vector3(pos.x, pos.y ,0f) , Quaternion.identity);
+        Gem gem= Instantiate(gemToSpawn, new Vector3(pos.x, pos.y +height ,0f) , Quaternion.identity);
         gem.transform.parent=transform;
         gem.name= "Gem - " +pos.x + " , " + pos.y;
         allGems[pos.x, pos.y] =gem;
