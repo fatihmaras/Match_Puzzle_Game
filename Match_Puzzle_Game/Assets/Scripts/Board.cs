@@ -12,6 +12,8 @@ public class Board : MonoBehaviour
     public Gem[] gems;
     public Gem[,] allGems;
 
+    public float gemSpeed;
+
 
     
     // Start is called before the first frame update

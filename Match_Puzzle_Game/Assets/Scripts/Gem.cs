@@ -29,6 +29,18 @@ public class Gem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Vector2.Distance(transform.position, posIndex)>.01f)
+        {
+            transform.position= Vector2.Lerp(transform.position,posIndex,board.gemSpeed*Time.deltaTime); 
+        }
+        else
+        {
+            transform.position=new Vector3(posIndex.x, posIndex.y, 0f);
+            board.allGems[posIndex.x,posIndex.y]=this;
+        }
+        
+        
+        
         if(mousePressed && Input.GetMouseButtonUp(0))
         {
             mousePressed=false;
@@ -57,7 +69,7 @@ public class Gem : MonoBehaviour
     {
         swipeAngle= Mathf.Atan2(finalTouchPosition.y-firstTouchPosition.y, finalTouchPosition.x-firstTouchPosition.x);
         swipeAngle=swipeAngle *180 /Mathf.PI;
-        Debug.Log(swipeAngle);
+        //Debug.Log(swipeAngle);
 
         if(Vector3.Distance(firstTouchPosition,finalTouchPosition)>.5f)
         {
