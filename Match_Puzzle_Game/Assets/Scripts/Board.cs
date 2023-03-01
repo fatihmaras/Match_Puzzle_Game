@@ -123,5 +123,34 @@ public class Board : MonoBehaviour
                 DestroyMatchedGemAt(matchFinder.currentMatches[i].posIndex);
             }
         }
+
+        StartCoroutine(DecreaseRowCo());
+   }
+
+   private IEnumerator DecreaseRowCo()  // move to empty spaces
+   {
+        yield return new WaitForSeconds(.2f);
+
+        int nullCounter = 0;
+
+        for(int x = 0; x<width; x++)   // control to empty spaces
+        {
+            for(int y = 0; y<height; y++)
+            {
+                if(allGems[x,y]==null)
+                {
+                    nullCounter++;
+                }
+                else if (nullCounter>0)
+                {
+                    allGems[x,y].posIndex.y -= nullCounter;
+                    allGems[x, y- nullCounter]=allGems [x,y];
+                    allGems[x,y]=null;
+                }
+            }
+
+            nullCounter=0;
+        }
+
    }
 }
