@@ -165,7 +165,7 @@ public class Board : MonoBehaviour
 
         if(matchFinder.currentMatches.Count>0)
         {
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(1f);
             DestroyMatches();
         }
 
@@ -185,7 +185,30 @@ public class Board : MonoBehaviour
                 
             }
         }
+
+        CheckMisplacedGems();
    }
 
+    private void CheckMisplacedGems()   // This method for fixing bug
+    {
+        List<Gem> foundedGems=new List<Gem>();
+        foundedGems.AddRange(FindObjectsOfType<Gem>());
+
+        for(int x = 0; x<width; x++)   
+        {
+            for(int y = 0; y<height; y++)
+            {
+                if(foundedGems.Contains(allGems[x,y]))
+                {
+                    foundedGems.Remove(allGems[x,y]);
+                }                
+            }
+        }
+
+        foreach(Gem gem in foundedGems)
+        {
+            Destroy(gem.gameObject);
+        }
+    }
    
 }
