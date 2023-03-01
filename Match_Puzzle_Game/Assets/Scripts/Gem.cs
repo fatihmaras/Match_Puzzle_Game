@@ -22,6 +22,8 @@ public class Gem : MonoBehaviour
 
     public bool isMatched;
 
+    private Vector2Int previousPos;
+
 
 
 
@@ -52,7 +54,7 @@ public class Gem : MonoBehaviour
 
             finalTouchPosition=Camera.main.ScreenToWorldPoint(Input.mousePosition);
             CalculateAngle();
-        }
+        } 
     }
 
     public void SetupGem(Vector2Int pos , Board theBoard)
@@ -85,6 +87,9 @@ public class Gem : MonoBehaviour
 
     private void MovePieces()
     {
+        previousPos=posIndex;
+
+
         if(swipeAngle<45 && swipeAngle>-45  && posIndex.x<board.width -1)
         {
             //Move to Right
@@ -123,5 +128,24 @@ public class Gem : MonoBehaviour
 
             board.allGems[posIndex.x,posIndex.y]=this;
             board.allGems[otherGem.posIndex.x, otherGem.posIndex.y]=otherGem;
+
+
+            StartCoroutine(CheckMoveCo());
+    }
+
+    public IEnumerator CheckMoveCo()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        board.matchFinder.FindAllMatches();
+
+        if(!isMatched && !otherGem.isMatched)   // Start to --> if there is not match go back to previous position
+        {
+            otherGem.posIndex=posIndex;
+            posIndex=previousPos;
+
+            board.allGems[posIndex.x,posIndex.y]=this;
+            board.allGems[otherGem.posIndex.x, otherGem.posIndex.y]=otherGem;
+        }
     }
 }
