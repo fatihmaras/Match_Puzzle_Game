@@ -109,6 +109,8 @@ public class Board : MonoBehaviour
         {
             if(allGems[pos.x, pos.y].isMatched)
             {
+                Instantiate(allGems[pos.x, pos.y].destroyEffect,new Vector2(pos.x, pos.y),Quaternion.identity);
+
                 Destroy(allGems[pos.x,pos.y].gameObject);
                 allGems[pos.x, pos.y]=null;
 

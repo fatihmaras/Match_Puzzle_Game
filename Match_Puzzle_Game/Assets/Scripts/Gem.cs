@@ -24,6 +24,8 @@ public class Gem : MonoBehaviour
 
     private Vector2Int previousPos;
 
+    public GameObject destroyEffect;
+
 
 
 
@@ -159,7 +161,7 @@ public class Gem : MonoBehaviour
             board.allGems[otherGem.posIndex.x, otherGem.posIndex.y]=otherGem;
 
             yield return new WaitForSeconds(.5f);
-            
+
             board.currentState=Board.BoardState.move;
         }
         else 
