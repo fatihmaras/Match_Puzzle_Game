@@ -39,6 +39,11 @@ public class Board : MonoBehaviour
     void Update() 
     {
        //  matchFinder.FindAllMatches();  --> We dont need to check at the every frame , we need to check when we move objects
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            ShuffleBoard();
+        }
+
     }
 
    
@@ -168,7 +173,7 @@ public class Board : MonoBehaviour
         StartCoroutine(FillBoardCo());
    }
 
-   private IEnumerator FillBoardCo()
+   private IEnumerator FillBoardCo()  // if there is a match after shuffle , provide to destroy them;
    {
         yield return new WaitForSeconds(.5f);
         RefillBoard();
@@ -230,4 +235,47 @@ public class Board : MonoBehaviour
         }
     }
    
+   public void ShuffleBoard()
+   {
+        if(currentState !=BoardState.wait)
+        {
+            currentState=BoardState.wait;
+
+            List<Gem> gemsFromBoard=new List<Gem>();
+
+            for(int x = 0; x<width; x++)   
+            {
+                for(int y = 0; y<height; y++)
+                {
+                    gemsFromBoard.Add(allGems[x,y]);
+                    allGems[x,y]=null;
+                }
+            
+            }
+
+            for(int x = 0; x<width; x++)   
+            {
+                for(int y = 0; y<height; y++)
+                {
+                    int gemToUse=Random.Range(0,gemsFromBoard.Count);
+
+                    int iterations=0;
+                    while (MatchesAt(new Vector2Int(x,y),gemsFromBoard[gemToUse]) && iterations<100 && gemsFromBoard.Count>1)   
+                    {
+                        gemToUse=Random.Range(0,gemsFromBoard.Count);
+                        iterations++;
+                    }
+
+                    gemsFromBoard[gemToUse].SetupGem(new Vector2Int(x,y),this);
+                    allGems[x,y]= gemsFromBoard[gemToUse];
+                    gemsFromBoard.RemoveAt(gemToUse);
+                }
+            }
+
+            StartCoroutine(FillBoardCo()); // if there is a match after shuffle , provide to destroy them
+        }
+
+   
+   }
+
 }
