@@ -28,6 +28,8 @@ public class Gem : MonoBehaviour
 
     public int blastSize = 2;
 
+    public int scoreValue = 10;
+
 
 
 
@@ -56,7 +58,7 @@ public class Gem : MonoBehaviour
         {
             mousePressed=false;
 
-            if(board.currentState == Board.BoardState.move)
+            if(board.currentState == Board.BoardState.move && board.roundManager.roundTime>0)
             {
             finalTouchPosition=Camera.main.ScreenToWorldPoint(Input.mousePosition);
             CalculateAngle();
@@ -74,7 +76,7 @@ public class Gem : MonoBehaviour
     private void OnMouseDown() 
     {
         // Debug.Log("Pressed" + name);
-        if(board.currentState==Board.BoardState.move)
+        if(board.currentState==Board.BoardState.move && board.roundManager.roundTime>0)
         {
             firstTouchPosition=Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePressed=true;
