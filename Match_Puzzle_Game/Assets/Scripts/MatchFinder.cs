@@ -32,7 +32,7 @@ public class MatchFinder : MonoBehaviour
                         Gem rightGem= board.allGems[x+1,y];
                         if(leftGem != null && rightGem != null)  //neighbor slot is not empty
                         {
-                            if(leftGem.type==currentGem.type && rightGem.type==currentGem.type)   // Check gem type left-current-right
+                            if(leftGem.type==currentGem.type && rightGem.type==currentGem.type && currentGem.type!= Gem.GemType.stone )   // Check gem type left-current-right
                             {
                                 currentGem.isMatched=true;
                                 leftGem.isMatched=true;
@@ -52,7 +52,7 @@ public class MatchFinder : MonoBehaviour
                         Gem belowGem= board.allGems[x,y-1];
                         if(aboveGem != null && belowGem != null)  //neighbor slot is not empty
                         {
-                            if(aboveGem.type==currentGem.type && belowGem.type==currentGem.type)   // Check gemtype above-current-below
+                            if(aboveGem.type==currentGem.type && belowGem.type==currentGem.type  && currentGem.type!= Gem.GemType.stone )   // Check gemtype above-current-below
                             {                             
                                 currentGem.isMatched=true;
                                 aboveGem.isMatched=true;
